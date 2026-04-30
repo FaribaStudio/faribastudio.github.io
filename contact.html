@@ -96,29 +96,34 @@
         </div>
 
         <div class="contact-form">
-            <form action="#">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" placeholder="Your name" required>
-                </div>
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" placeholder="email@example.com" required>
-                </div>
-                <div class="form-group">
-                    <label>Reason for Inquiry</label>
-                    <select>
-                        <option>Original Canvas Acquisition</option>
-                        <option>Greeting Card Collection Order</option>
-                        <option>General Studio Question</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Message</label>
-                    <textarea placeholder="Please provide details about the artwork or collection you are interested in..."></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Send Inquiry</button>
-            </form>
+        <form action="https://formspree.io/f/xdabolqa" method="POST">
+            <div class="form-group">
+                <label>Full Name</label>
+                <!-- CRITICAL: Ensure every input has a 'name' attribute -->
+                <input type="text" name="name" placeholder="Your name" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" name="email" placeholder="email@example.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Reason for Inquiry</label>
+                <select name="inquiry_type">
+                    <option>Original Canvas Acquisition</option>
+                    <option>Greeting Card Collection Order</option>
+                    <option>General Studio Question</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Message</label>
+                <textarea name="message" placeholder="Please provide details..."></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Send Inquiry</button>
+        </form>
         </div>
     </main>
 
