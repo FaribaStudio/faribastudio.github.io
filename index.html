@@ -33,7 +33,50 @@
         .btn:hover { opacity: 0.8; transform: translateY(-2px); }
         footer { padding: 40px; background: #111; color: #777; text-align: center; font-size: 12px; }
 
+            /* Mobile Responsive Adjustments */
+        @media (max-width: 768px) {
+            /* Navigation: Stack links or center them */
+            nav {
+                flex-direction: column;
+                padding: 15px;
+            }
+            .nav-links {
+                margin-top: 15px;
+            }
+            .nav-links a {
+                margin: 0 10px;
+                font-size: 12px;
+            }
 
+            /* Hero Section: Shrink text so it fits */
+            .hero h1 {
+                font-size: 2.2rem !important;
+            }
+            .hero p {
+                font-size: 1rem !important;
+            }
+
+            /* Grid Layouts: Force 1 column on small screens */
+            .gallery-grid, 
+            .contact-container,
+            section { 
+                grid-template-columns: 1fr !important; 
+                padding: 40px 5% !important;
+                gap: 30px !important;
+            }
+
+            /* Images: Adjust height for mobile viewing */
+            .art-item img {
+                height: auto !important;
+                aspect-ratio: 1 / 1; /* Makes them nice squares on mobile */
+            }
+
+            /* Modal (Zoom): Make sure the zoomed image fits the screen */
+            .modal-content {
+                max-width: 95%;
+                margin-top: 20%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -61,17 +104,26 @@
             </div>
         </div>
     </header>
-    <section style="padding: 80px 10%; text-align: center;">
-        <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 20px;">Art for a peaceful home.</h2>
+    <section class="responsive-section" style="padding: 100px 10%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+        <!-- Column 1: The Image -->
+        <div>
+            <img src="canvas/pei2.png" alt="Fariba Artwork" style="width: 100%; height: auto; box-shadow: 15px 15px 0px var(--gray); border: 1px solid #eee;">
+        </div>
+
+        <!-- Column 2: The Text Grouped Together -->
+        <div>
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 20px;">Art for a peaceful home.</h2>
             <p style="color: #555; font-size: 1.1rem; line-height: 1.8;">
                 Welcome to Fariba Studio. <br>
-                Based in East Coast Canada and inspired by the world, I find beauty in the quiet <br> 
-                details; the way light hits a mountain range, the nostalgia of a seaside stroll or the playful spirit of a loyal pet.
+                Based in East Coast Canada and inspired by the world, I find beauty in the quiet 
+                details; the way light hits a mountain range, the nostalgia of a seaside stroll, or the playful spirit of a loyal pet.
             </p>
             <p style="color: #555; font-size: 1.1rem; margin-bottom: 30px;">
                 Using traditional hand-painted watercolor techniques, I create original works and 
                 greeting cards designed to bring a sense of serenity to your space.
             </p>
+            <a href="gallery.html" style="color: var(--black); font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--gold); padding-bottom: 5px;">VIEW THE COLLECTION →</a>
+        </div>
     </section>
     <footer>&copy; 2026 FARIBA STUDIO</footer>
 </body>
