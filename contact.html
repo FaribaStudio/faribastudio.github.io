@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Fariba Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #af944d; --black: #1a1a1a; --white: #ffffff; --gray: #f9f9f9; }
+        body { margin: 0; font-family: 'Montserrat', sans-serif; background: var(--white); color: var(--black); }
+        nav { display: flex; justify-content: space-between; padding: 25px 5%; align-items: center; border-bottom: 1px solid #eee; background: white; }
+        .logo { font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 22px; text-decoration: none; color: black; }
+        .nav-links a { text-decoration: none; color: var(--black); margin-left: 25px; font-size: 13px; font-weight: 600; }
+
+        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; padding: 80px 10%; max-width: 1200px; margin: 0 auto; }
+        
+        .contact-info h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 20px; }
+        .contact-info p { color: #666; font-size: 16px; margin-bottom: 30px; line-height: 1.8; }
+        
+        .details { margin-top: 40px; }
+        .details div { margin-bottom: 20px; }
+        .details strong { display: block; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; color: var(--gold); margin-bottom: 5px; }
+
+        /* Form Styles */
+        .contact-form { background: var(--gray); padding: 40px; border-radius: 4px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; margin-bottom: 8px; }
+        input, select, textarea { 
+            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 2px; 
+            font-family: 'Montserrat', sans-serif; box-sizing: border-box; 
+        }
+        textarea { height: 150px; resize: vertical; }
+        
+        .submit-btn { 
+            background: var(--black); color: white; border: none; padding: 15px 30px; 
+            text-transform: uppercase; letter-spacing: 1px; font-weight: 600; 
+            cursor: pointer; transition: 0.3s; width: 100%;
+        }
+        .submit-btn:hover { background: var(--gold); }
+
+        footer { padding: 40px; background: #111; color: #777; text-align: center; font-size: 12px; margin-top: 80px; }
+
+        @media (max-width: 768px) {
+            .contact-container { grid-template-columns: 1fr; padding: 40px 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">Fariba Studio</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="contact.html" style="color: var(--gold);">Contact</a>
+        </div>
+    </nav>
+
+    <div class="contact-container">
+        <div class="contact-info">
+            <h1>Get in Touch</h1>
+            <p>Whether you are interested in a specific original canvas, a collection of greeting cards, or just want to say hello, I would love to hear from you.</p>
+            
+            <div class="details">
+                <div>
+                    <strong>Studio Location</strong>
+                    <span>Available by appointment only</span>
+                </div>
+                <div>
+                    <strong>Email</strong>
+                    <span>hello@faribastudio.com</span>
+                </div>
+                <div>
+                    <strong>Social</strong>
+                    <span>@fariba_art_studio</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <form action="#">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Inquiry Type</label>
+                    <select>
+                        <option>Original Painting Inquiry</option>
+                        <option>Greeting Card Order</option>
+                        <option>General Question</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea placeholder="Tell me about the piece you're interested in..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>&copy; 2026 FARIBA STUDIO | BASED IN THE MEDITERRANEAN</footer>
+
+</body>
+</html>
