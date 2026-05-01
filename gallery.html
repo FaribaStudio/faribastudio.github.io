@@ -8,7 +8,7 @@
     <style>
         :root { --gold: #af944d; --black: #1a1a1a; --white: #ffffff; --gray: #f9f9f9; }
         body { margin: 0; font-family: 'Montserrat', sans-serif; background: var(--white); }
-        nav { display: flex; justify-content: space-between; padding: 25px 5%; align-items: center; border-bottom: 1px solid #eee; background: white; }
+        nav { display: flex; justify-content: space-between; padding: 25px 5%; align-items: center; border-bottom: 1px solid #eee; background: white; position: sticky; top: 0; z-index: 100; }
         .logo { font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 22px; text-decoration: none; color: black; }
         .nav-links a { text-decoration: none; color: var(--black); margin-left: 25px; font-size: 13px; font-weight: 600; }
         
@@ -19,20 +19,16 @@
         .filter-btn { margin: 0 15px; font-size: 12px; text-transform: uppercase; cursor: pointer; letter-spacing: 1px; color: #999; border: none; background: none; padding-bottom: 5px; }
         .filter-btn.active { color: var(--black); font-weight: 700; border-bottom: 2px solid var(--black); }
 
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 40px; padding: 60px 5%; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 40px; padding: 60px 5%; min-height: 400px; }
         .art-item { text-align: center; transition: 0.4s ease; }
+        
+        /* Required for JS handling */
         .art-item.hidden { display: none; }
+        .art-item.page-hidden { display: none; }
 
-        /* The Image Box */
         .art-item img { 
-            width: 100%; 
-            height: auto; 
-            aspect-ratio: 4 / 3; 
-            object-fit: contain; 
-            background: #fdfdfd; 
-            border: 1px solid #eee;
-            transition: 0.3s;
-            cursor: zoom-in; /* Shows the zoom icon on hover */
+            width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; 
+            background: #fdfdfd; border: 1px solid #eee; transition: 0.3s; cursor: zoom-in; 
         }
         .art-item img:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
 
@@ -40,75 +36,41 @@
         .category-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); font-weight: 600; display: block; margin-bottom: 5px; }
         .price { color: var(--black); font-weight: 600; margin-top: 10px; }
 
-        /* --- ZOOM MODAL (LIGHTBOX) --- */
+        /* --- PRODUCT MODAL --- */
         .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 2000; 
-            padding-top: 50px; 
-            left: 0; top: 0; 
-            width: 100%; height: 100%; 
-            background-color: rgba(255,255,255,0.98); /* Clean white background */
-            cursor: zoom-out;
+            display: none; position: fixed; z-index: 2000; left: 0; top: 0; 
+            width: 100%; height: 100%; background-color: rgba(255,255,255,0.98); overflow-y: auto; 
         }
-        .modal-content {
-            margin: auto;
-            display: block;
-            max-width: 90%;
-            max-height: 85vh;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        .modal-container {
+            display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; 
+            max-width: 1200px; margin: 50px auto; padding: 20px; align-items: start;
         }
-        .close {
-            position: absolute;
-            top: 20px; right: 35px;
-            color: #000; font-size: 40px; font-weight: bold; cursor: pointer;
-        }
+        .modal-image-column img { width: 100%; height: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #eee; }
+        .modal-info-column { text-align: left; padding-top: 20px; }
+        .modal-info-column h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 10px; }
+        .item-spec { margin: 20px 0; border-top: 1px solid #eee; padding-top: 20px; }
+        .spec-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 14px; }
+        .spec-label { font-weight: 600; text-transform: uppercase; color: #999; letter-spacing: 1px; }
+        .spec-value { color: var(--black); font-weight: 400; }
+        .modal-description { line-height: 1.8; color: #555; margin: 30px 0; }
+        .modal-close { position: fixed; top: 20px; right: 35px; font-size: 40px; cursor: pointer; color: #000; z-index: 2001; }
+        .btn-gold { background: var(--gold); color: white; padding: 15px 35px; text-decoration: none; display: inline-block; font-weight: 600; transition: 0.3s; text-align: center; }
+        .btn-gold:hover { opacity: 0.8; }
+
+        /* --- PAGINATION STYLES --- */
+        .pagination-container { display: flex; justify-content: center; align-items: center; padding: 40px 0; gap: 10px; }
+        .page-btn { width: 40px; height: 40px; border: 1px solid #ddd; background: white; color: var(--black); cursor: pointer; font-weight: 600; transition: 0.3s; display: flex; justify-content: center; align-items: center; }
+        .page-btn.active { background: var(--gold); color: white; border-color: var(--gold); }
+        .page-btn:hover:not(.active) { background: var(--gray); }
 
         footer { padding: 40px; background: #111; color: #777; text-align: center; font-size: 12px; }
         
-        /* Mobile Responsive Adjustments */
-        @media (max-width: 768px) {
-            /* Navigation: Stack links or center them */
-            nav {
-                flex-direction: column;
-                padding: 15px;
-            }
-            .nav-links {
-                margin-top: 15px;
-            }
-            .nav-links a {
-                margin: 0 10px;
-                font-size: 12px;
-            }
-
-            /* Hero Section: Shrink text so it fits */
-            .hero h1 {
-                font-size: 2.2rem !important;
-            }
-            .hero p {
-                font-size: 1rem !important;
-            }
-
-            /* Grid Layouts: Force 1 column on small screens */
-            .gallery-grid, 
-            .contact-container,
-            section { 
-                grid-template-columns: 1fr !important; 
-                padding: 40px 5% !important;
-                gap: 30px !important;
-            }
-
-            /* Images: Adjust height for mobile viewing */
-            .art-item img {
-                height: auto !important;
-                aspect-ratio: 1 / 1; /* Makes them nice squares on mobile */
-            }
-
-            /* Modal (Zoom): Make sure the zoomed image fits the screen */
-            .modal-content {
-                max-width: 95%;
-                margin-top: 20%;
-            }
+        @media (max-width: 900px) {
+            nav { flex-direction: column; padding: 15px; }
+            .nav-links { margin-top: 15px; }
+            .nav-links a { margin: 0 10px; font-size: 12px; }
+            .gallery-grid { grid-template-columns: 1fr !important; padding: 40px 5% !important; gap: 30px !important; }
+            .modal-container { grid-template-columns: 1fr; margin-top: 80px; }
         }
     </style>
 </head>
@@ -126,76 +88,207 @@
     <header class="gallery-header">
         <h1>The Collection</h1>
         <div class="filter-nav">
-            <button class="filter-btn active" onclick="filterSelection('all')">All</button>
-            <button class="filter-btn" onclick="filterSelection('canvas')">Original Canvases</button>
-            <button class="filter-btn" onclick="filterSelection('card')">Greeting Cards</button>
+            <button id="btn-all" class="filter-btn active" onclick="filterSelection('all')">All</button>
+            <button id="btn-canvas" class="filter-btn" onclick="filterSelection('canvas')">Original Canvases</button>
+            <button id="btn-card" class="filter-btn" onclick="filterSelection('card')">Greeting Cards</button>
         </div>
     </header>
 
-    <main class="gallery-grid">
+    <main class="gallery-grid" id="galleryGrid">
+        <!-- Add more items here; the script handles the 9-item limit automatically -->
         <div class="art-item canvas">
             <span class="category-tag">Original Canvas</span>
-            <img src="canvas/person2.jpg" alt="The Summer Parasol" onclick="openModal(this.src)">
+            <img src="canvas/person2.jpg" alt="The Summer Parasol" 
+                 onclick="openModal(this.src, 'The Summer Parasol', '$850.00', 'A peaceful study of light and shade capturing global scenes.', 'Arches Cold Press 300gsm', '18x24 Canvas', '12:45')">
             <h3>The Summer Parasol</h3>
-            <p class="price">$850.00</p>
+            <p class="price">$250.00</p>
         </div>
 
         <div class="art-item card">
             <span class="category-tag">Greeting Card</span>
-            <img src="greeting-cards/color1.png" alt="Card" onclick="openModal(this.src)">
+            <img src="greeting-cards/color1.png" alt="Sun-Drenched Siesta" 
+                 onclick="openModal(this.src, 'Sun-Drenched Siesta', '$20.00', 'A warm, calming scene.', 'Textured Watercolor Paper', '5x7 Card', '02:15')">
             <h3>Sun-Drenched Siesta</h3>
             <p class="price">$20.00</p>
         </div>
 
         <div class="art-item card">
             <span class="category-tag">Greeting Card</span>
-            <img src="greeting-cards/color2.png" alt="Card" onclick="openModal(this.src)">
+            <img src="greeting-cards/color2.png" alt="Loyal Companions" 
+                 onclick="openModal(this.src, 'Loyal Companions', '$20.00', 'A study of animals and puppies.', 'Textured Watercolor Paper', '5x7 Card', '03:30')">
             <h3>Loyal Companions</h3>
             <p class="price">$20.00</p>
         </div>
 
         <div class="art-item card">
             <span class="category-tag">Greeting Card</span>
-            <img src="greeting-cards/color3.png" alt="Card" onclick="openModal(this.src)">
+            <img src="greeting-cards/color3.png" alt="Aegean Afternoon" 
+                 onclick="openModal(this.src, 'Aegean Afternoon', '$25.00', 'Vibrant global landscape.', 'Fine Art Cotton Rag', '5x7 Card', '04:00')">
             <h3>Aegean Afternoon</h3>
-            <p class="price">$25.00</p>
+            <p class="price">$20.00</p>
         </div>
 
         <div class="art-item card">
             <span class="category-tag">Greeting Card</span>
-            <img src="greeting-cards/color4.png" alt="Card" onclick="openModal(this.src)">
+            <img src="greeting-cards/color4.png" alt="Emerald in Motion" 
+                 onclick="openModal(this.src, 'Emerald in Motion', '$25.00', 'A vibrant study of a mallard duck.', 'Fine Art Cotton Rag', '5x7 Card', '04:30')">
             <h3>Emerald in Motion</h3>
-            <p class="price">$25.00</p>
+            <p class="price">$20.00</p>
+        </div>
+
+        <div class="art-item card">
+            <span class="category-tag">Greeting Card</span>
+            <img src="greeting-cards/color1.png" alt="Sun-Drenched Siesta" 
+                 onclick="openModal(this.src, 'Sun-Drenched Siesta', '$20.00', 'A warm, calming scene.', 'Textured Watercolor Paper', '5x7 Card', '02:15')">
+            <h3>Sun-Drenched Siesta</h3>
+            <p class="price">$20.00</p>
+        </div>
+        
+        <div class="art-item card">
+            <span class="category-tag">Greeting Card</span>
+            <img src="greeting-cards/color1.png" alt="Sun-Drenched Siesta" 
+                 onclick="openModal(this.src, 'Sun-Drenched Siesta', '$20.00', 'A warm, calming scene.', 'Textured Watercolor Paper', '5x7 Card', '02:15')">
+            <h3>Sun-Drenched Siesta</h3>
+            <p class="price">$20.00</p>
+        </div>
+        
+        <div class="art-item card">
+            <span class="category-tag">Greeting Card</span>
+            <img src="greeting-cards/color1.png" alt="Sun-Drenched Siesta" 
+                 onclick="openModal(this.src, 'Sun-Drenched Siesta', '$20.00', 'A warm, calming scene.', 'Textured Watercolor Paper', '5x7 Card', '02:15')">
+            <h3>Sun-Drenched Siesta</h3>
+            <p class="price">$20.00</p>
+        </div>
+        
+        <div class="art-item card">
+            <span class="category-tag">Greeting Card</span>
+            <img src="greeting-cards/color1.png" alt="Sun-Drenched Siesta" 
+                 onclick="openModal(this.src, 'Sun-Drenched Siesta', '$20.00', 'A warm, calming scene.', 'Textured Watercolor Paper', '5x7 Card', '02:15')">
+            <h3>Sun-Drenched Siesta</h3>
+            <p class="price">$20.00</p>
         </div>
     </main>
 
-    <div id="myModal" class="modal" onclick="this.style.display='none'">
-        <span class="close">&times;</span>
-        <img class="modal-content" id="img01">
+    <!-- Pagination Controls -->
+    <div id="pagination" class="pagination-container"></div>
+
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <div class="modal-container">
+            <div class="modal-image-column">
+                <img id="modalImg" src="" alt="">
+            </div>
+            <div class="modal-info-column">
+                <h2 id="modalTitle">Artwork Title</h2>
+                <p id="modalPrice" style="font-size: 24px; color: var(--gold); font-weight: 600;">$0.00</p>
+                <div class="modal-description" id="modalDesc">Description goes here...</div>
+                <div class="item-spec">
+                    <div class="spec-row"><span class="spec-label">Paper / Material</span><span id="modalPaper" class="spec-value">-</span></div>
+                    <div class="spec-row"><span class="spec-label">Dimensions</span><span id="modalSize" class="spec-value">-</span></div>
+                    <div class="spec-row"><span class="spec-label">Time Spent</span><span id="modalHours" class="spec-value">00:00</span></div>
+                    <div class="spec-row"><span class="spec-label">Edition</span><span class="spec-value">One-of-a-kind Original</span></div>
+                </div>
+                <a href="contact.html" class="btn-gold" style="display: block; margin-top: 30px;">Inquire About This Piece</a>
+            </div>
+        </div>
     </div>
 
-    <footer>&copy; 2026 FARIBA STUDIO</footer>
+    <footer>&copy; 2026 FARIBA STUDIO | ALL WORKS ARE HAND-PAINTED ORIGINALS</footer>
 
     <script>
-        // Filtering Logic
+        const itemsPerPage = 9;
+        let currentPage = 1;
+        let currentCategory = 'all';
+
+        function updateGallery() {
+            const items = Array.from(document.querySelectorAll('.art-item'));
+            
+            // 1. Filter items by category first
+            const filteredItems = items.filter(item => {
+                if (currentCategory === 'all') return true;
+                return item.classList.contains(currentCategory);
+            });
+
+            // 2. Hide all items initially
+            items.forEach(item => {
+                item.classList.add('hidden');
+                item.classList.add('page-hidden');
+            });
+
+            // 3. Logic for pagination within the filtered set
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+
+            filteredItems.forEach((item, index) => {
+                if (index >= startIndex && index < endIndex) {
+                    item.classList.remove('hidden');
+                    item.classList.remove('page-hidden');
+                }
+            });
+
+            renderPagination(filteredItems.length);
+        }
+
+        function renderPagination(totalItems) {
+            const paginationDiv = document.getElementById('pagination');
+            paginationDiv.innerHTML = '';
+            
+            const pageCount = Math.ceil(totalItems / itemsPerPage);
+            if (pageCount <= 1) return; 
+
+            for (let i = 1; i <= pageCount; i++) {
+                const btn = document.createElement('button');
+                btn.innerText = i;
+                btn.className = 'page-btn' + (i === currentPage ? ' active' : '');
+                btn.onclick = () => {
+                    currentPage = i;
+                    updateGallery();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                };
+                paginationDiv.appendChild(btn);
+            }
+        }
+
         function filterSelection(category) {
-            const items = document.querySelectorAll('.art-item');
+            currentCategory = category;
+            currentPage = 1; // Reset to first page on filter change
+            
             const buttons = document.querySelectorAll('.filter-btn');
             buttons.forEach(btn => {
                 btn.classList.remove('active');
-                if(btn.innerText.toLowerCase().includes(category) || (category === 'all' && btn.innerText === 'ALL')) btn.classList.add('active');
+                if (category === 'all' && btn.id === 'btn-all') btn.classList.add('active');
+                if (category === 'canvas' && btn.id === 'btn-canvas') btn.classList.add('active');
+                if (category === 'card' && btn.id === 'btn-card') btn.classList.add('active');
             });
-            items.forEach(item => {
-                if (category === 'all' || item.classList.contains(category)) item.classList.remove('hidden');
-                else item.classList.add('hidden');
-            });
+
+            updateGallery();
         }
 
-        // Lightbox Logic
-        function openModal(src) {
-            document.getElementById("myModal").style.display = "block";
-            document.getElementById("img01").src = src;
+        function openModal(imgSrc, title, price, desc, paper, size, hours) {
+            document.getElementById("productModal").style.display = "block";
+            document.getElementById("modalImg").src = imgSrc;
+            document.getElementById("modalTitle").innerText = title;
+            document.getElementById("modalPrice").innerText = price;
+            document.getElementById("modalDesc").innerText = desc;
+            document.getElementById("modalPaper").innerText = paper;
+            document.getElementById("modalSize").innerText = size;
+            document.getElementById("modalHours").innerText = hours;
+            document.body.style.overflow = "hidden";
         }
+
+        function closeModal() {
+            document.getElementById("productModal").style.display = "none";
+            document.body.style.overflow = "auto"; 
+        }
+
+        window.onclick = function(event) {
+            let modal = document.getElementById("productModal");
+            if (event.target == modal) closeModal();
+        }
+
+        // Run on load
+        window.onload = updateGallery;
     </script>
 </body>
 </html>
