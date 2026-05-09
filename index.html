@@ -5,41 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Explore original hand-painted watercolor artworks and greeting cards by Fariba Studio, based in East Coast Canada.">
     <title>Fariba Studio | Home</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
+        /* --- 1. CSS VARIABLES (Coastal Serenity Palette) --- */
         :root { 
             /* Light Mode */
-            --bg-primary: #ffffff;
-            --bg-secondary: #f4f4f4;
-            --text-primary: #1a1a1a;
-            --text-secondary: #444444;
-            --border-color: #eeeeee;
-            --gold: #8f7632; 
-            --hero-box-bg: rgba(0, 0, 0, 0.45);
+            --bg-primary: #F8F9FA;    /* Soft sea-foam white */
+            --bg-secondary: #EDF1F5;  /* Very pale slate */
+            --text-primary: #121F2B;  /* Deep navy (Excellent contrast) */
+            --text-secondary: #33475B; /* Medium navy */
+            --border-color: #D6E0E9;
+            --accent: #2C6B7A;        /* Sea glass teal */
+            --hero-box-bg: rgba(18, 31, 43, 0.55);
         }
 
         [data-theme="dark"] {
             /* Dark Mode */
-            --bg-primary: #121212;
-            --bg-secondary: #1e1e1e;
-            --text-primary: #f4f4f4;
-            --text-secondary: #b0b0b0;
-            --border-color: #333333;
-            --gold: #d4af37;
-            --hero-box-bg: rgba(18, 18, 18, 0.65);
+            --bg-primary: #0A1118;    /* Midnight blue */
+            --bg-secondary: #121F2B;  /* Deep navy */
+            --text-primary: #F8F9FA;  /* Soft white */
+            --text-secondary: #A6B8C7; /* Soft slate */
+            --border-color: #233547;
+            --accent: #529EAD;        /* Brightened teal for dark mode */
+            --hero-box-bg: rgba(10, 17, 24, 0.75);
         }
         
+        /* --- 2. GLOBAL RESET & BASE STYLES --- */
         * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
 
-        body { margin: 0; font-family: 'Montserrat', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; }
+        body { 
+            margin: 0; 
+            font-family: 'Montserrat', sans-serif; 
+            background: var(--bg-primary); 
+            color: var(--text-primary); 
+            line-height: 1.6; 
+        }
+        
         h1, h2 { font-family: 'Playfair Display', serif; }
         
+        /* Accessibility: Skip to content link */
         .skip-link {
-            position: absolute; top: -40px; left: 0; background: var(--gold); color: white;
+            position: absolute; top: -40px; left: 0; background: var(--accent); color: white;
             padding: 8px; z-index: 200; transition: top 0.3s; text-decoration: none;
         }
         .skip-link:focus { top: 0; }
+        a:focus { outline: 2px solid var(--accent); outline-offset: 4px; }
 
+        /* --- 3. NAVIGATION --- */
         nav { 
             display: flex; justify-content: space-between; padding: 25px 5%; 
             align-items: center; border-bottom: 1px solid var(--border-color); 
@@ -47,82 +61,105 @@
         }
 
         .logo { font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 22px; text-decoration: none; color: var(--text-primary); }
+        
         .nav-links { display: flex; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--text-primary); margin-left: 25px; font-size: 14px; font-weight: 600; transition: 0.3s; }
-        .nav-links a:hover { color: var(--gold); }
-        a:focus { outline: 2px solid var(--gold); outline-offset: 4px; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
 
-        /* Theme Toggle styling */
-        .theme-toggle-btn { background: none; border: none; cursor: pointer; margin-left: 25px; font-size: 18px; padding: 5px; color: var(--text-primary); display: flex; align-items: center; }
-        .theme-toggle-btn:hover { color: var(--gold); }
+        /* Theme Toggle Pill Slider */
+        .theme-switch {
+            position: relative; display: inline-block;
+            width: 46px; height: 24px; margin-left: 25px;
+        }
+        .theme-switch input { opacity: 0; width: 0; height: 0; }
+        
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--border-color); transition: 0.4s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px;
+            left: 3px; bottom: 3px; background-color: var(--text-primary);
+            transition: 0.4s; border-radius: 50%;
+        }
+        
+        input:checked + .slider { background-color: var(--accent); }
+        input:checked + .slider:before { transform: translateX(22px); background-color: #ffffff; }
 
-        /* Hero Section */
+        /* --- 4. HERO SECTION --- */
         .hero {
             height: 85vh;
             background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('canvas/pei2.png'); 
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
-            padding: 0 5%;
+            background-size: cover; background-position: center;
+            display: flex; justify-content: center; align-items: center;
+            color: white; text-align: center; padding: 0 5%;
         }
 
         .hero-content-box {
             background: var(--hero-box-bg); 
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            padding: 50px 40px;
-            border-radius: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            max-width: 800px;
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            padding: 50px 40px; border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.2); max-width: 800px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
 
+        .hero-subtitle {
+            text-transform: uppercase; letter-spacing: 4px; font-size: 12px; 
+            font-weight: 600; display: block; margin-bottom: 15px; 
+            color: rgba(255,255,255,0.7);
+        }
+
         .hero h1 { 
-            font-size: clamp(2.2rem, 6vw, 3.8rem); 
-            margin: 0 0 15px 0; 
-            color: #ffffff;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            font-size: clamp(2.2rem, 6vw, 3.8rem); margin: 0 0 15px 0; 
+            color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         .hero p { 
-            font-size: 1.15rem; 
-            margin-bottom: 30px; 
-            font-weight: 300;
-            color: rgba(255,255,255,0.95);
+            font-size: 1.15rem; margin-bottom: 30px; 
+            font-weight: 300; color: rgba(255,255,255,0.95);
         }
 
+        /* Buttons */
         .btn { 
             padding: 16px 40px; text-decoration: none; display: inline-block; 
             transition: 0.3s; font-weight: 700; font-size: 14px;
             text-transform: uppercase; letter-spacing: 1px;
         }
-        .btn-gold { background: var(--gold); color: white; }
-        .btn-gold:hover { background: #7a652a; transform: translateY(-2px); color: white; }
+        .btn-accent { background: var(--accent); color: white; }
+        .btn-accent:hover { opacity: 0.8; transform: translateY(-2px); color: white; }
 
+        /* --- 5. RESPONSIVE ABOUT SECTION --- */
         .responsive-section { 
             padding: 100px 10%; display: grid; grid-template-columns: 1fr 1fr; 
             gap: 60px; align-items: center; 
         }
 
         .section-text p { color: var(--text-secondary); }
+        
+        .collection-link {
+            color: var(--text-primary); font-weight: 700; text-decoration: none; 
+            border-bottom: 2px solid var(--accent); padding-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+        .collection-link:hover { color: var(--accent); }
 
         .feature-image-placeholder {
-            background: var(--bg-secondary); 
-            aspect-ratio: 1.4/1; 
+            background: var(--bg-secondary); aspect-ratio: 1.4/1; 
             border: 1px solid var(--border-color);
         }
 
-        footer { padding: 40px; background: #111; color: #777; text-align: center; font-size: 12px; border-top: 1px solid #222; }
+        /* --- 6. FOOTER --- */
+        footer { 
+            padding: 40px; background: #0A1118; color: #A6B8C7; 
+            text-align: center; font-size: 12px; border-top: 1px solid #233547; 
+        }
 
+        /* --- 7. MEDIA QUERIES (Mobile Adjustments) --- */
         @media (max-width: 768px) {
             nav { flex-direction: column; padding: 15px; }
             .nav-links { margin-top: 15px; }
             .nav-links a { margin: 0 10px; font-size: 12px; }
-            .theme-toggle-btn { margin-left: 10px; }
+            .theme-switch { margin-left: 10px; }
             .hero-content-box { padding: 30px 20px; }
             .responsive-section { grid-template-columns: 1fr; padding: 60px 5%; text-align: center; }
         }
@@ -135,25 +172,26 @@
     <nav role="navigation">
         <a href="index.html" class="logo">Fariba Studio</a>
         <div class="nav-links">
-            <a href="index.html" style="color: var(--gold);">Home</a>
+            <a href="index.html" class="active">Home</a>
             <a href="gallery.html">Gallery</a>
             <a href="contact.html">Contact</a> 
-            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Dark Mode">
-                <span id="theme-icon">🌙</span>
-            </button>
+            
+            <label class="theme-switch" aria-label="Toggle Dark Mode">
+                <input type="checkbox" id="theme-toggle-checkbox">
+                <span class="slider"></span>
+            </label>
         </div>
     </nav>
 
     <main id="main-content">
+        
         <header class="hero" aria-label="Introduction">
             <div class="hero-content-box">
-                <span style="text-transform: uppercase; letter-spacing: 4px; font-size: 12px; font-weight: 600; display: block; margin-bottom: 15px; color: rgba(255,255,255,0.7);">
-                    Hand-Painted Original Artwork
-                </span>
+                <span class="hero-subtitle">Hand-Painted Original Artwork</span>
                 <h1>Captured in Color & Light</h1>
                 <p>Original hand-painted watercolors by Fariba. From the quiet landscapes of the Canadian East Coast to cherished global memories.</p>
                 <div class="hero-btns">
-                    <a href="gallery.html" class="btn btn-gold">Explore the Gallery</a>
+                    <a href="gallery.html" class="btn btn-accent">Explore the Gallery</a>
                 </div>
             </div>
         </header>
@@ -164,40 +202,36 @@
                 <p style="font-size: 1.1rem;">
                     Welcome to Fariba Studio. Based in East Coast Canada and inspired by the world, I find beauty in the quiet details.
                 </p>
-                <a href="gallery.html" style="color: var(--text-primary); font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--gold); padding-bottom: 5px;">VIEW THE COLLECTION →</a>
+                <a href="gallery.html" class="collection-link">VIEW THE COLLECTION →</a>
             </div>
             <div class="feature-image-placeholder"></div>
         </section>
+        
     </main>
 
     <footer role="contentinfo">&copy; 2026 FARIBA STUDIO</footer>
 
     <script>
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
+        const themeCheckbox = document.getElementById('theme-toggle-checkbox');
         const htmlElement = document.documentElement;
 
-        // Check for saved preference or system preference
+        // Check for saved preference
         const currentTheme = localStorage.getItem('theme') || 'light';
 
         // Apply theme on load
         if (currentTheme === 'dark') {
             htmlElement.setAttribute('data-theme', 'dark');
-            themeIcon.innerText = '☀️';
+            themeCheckbox.checked = true; // Move slider to the right
         }
 
         // Toggle Logic
-        themeToggle.addEventListener('click', () => {
-            let theme = htmlElement.getAttribute('data-theme');
-            
-            if (theme === 'dark') {
-                htmlElement.removeAttribute('data-theme');
-                themeIcon.innerText = '🌙';
-                localStorage.setItem('theme', 'light');
-            } else {
+        themeCheckbox.addEventListener('change', function() {
+            if (this.checked) {
                 htmlElement.setAttribute('data-theme', 'dark');
-                themeIcon.innerText = '☀️';
                 localStorage.setItem('theme', 'dark');
+            } else {
+                htmlElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
             }
         });
     </script>

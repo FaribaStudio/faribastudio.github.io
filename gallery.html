@@ -5,58 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Browse the full collection of original watercolor paintings and hand-crafted greeting cards by Fariba Studio.">
     <title>Gallery | Fariba Studio</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
+        /* --- 1. CSS VARIABLES --- */
         :root { 
-            /* Light Mode (Default) */
-            --bg-primary: #ffffff;
-            --bg-secondary: #f9f9f9;
-            --text-primary: #1a1a1a;
-            --text-secondary: #666666;
-            --border-color: #eeeeee;
-            --gold: #8f7632; 
-            --modal-overlay: rgba(255, 255, 255, 1);
-        }
-        
-        [data-theme="dark"] {
-            /* Dark Mode */
-            --bg-primary: #121212;
-            --bg-secondary: #1e1e1e;
-            --text-primary: #f4f4f4;
-            --text-secondary: #b0b0b0;
-            --border-color: #333333;
-            --gold: #d4af37; /* Slightly brighter gold for dark background */
-            --modal-overlay: rgba(18, 18, 18, 1);
+            --bg-primary: #F8F9FA;    
+            --bg-secondary: #EDF1F5;  
+            --text-primary: #121F2B;  
+            --text-secondary: #33475B; 
+            --border-color: #D6E0E9;
+            --accent: #2C6B7A;        
+            --hero-box-bg: rgba(18, 31, 43, 0.55);
+            --modal-overlay: rgba(248, 249, 250, 0.95);
         }
 
-        /* Standardize transitions for a smooth theme switch */
+        [data-theme="dark"] {
+            --bg-primary: #0A1118;    
+            --bg-secondary: #121F2B;  
+            --text-primary: #F8F9FA;  
+            --text-secondary: #A6B8C7; 
+            --border-color: #233547;
+            --accent: #529EAD;        
+            --hero-box-bg: rgba(10, 17, 24, 0.75);
+            --modal-overlay: rgba(10, 17, 24, 0.98);
+        }
+
+        /* --- 2. GLOBAL RESET & BASE STYLES --- */
         * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
 
-        body { margin: 0; font-family: 'Montserrat', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; }
+        body { 
+            margin: 0; font-family: 'Montserrat', sans-serif; 
+            background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; 
+        }
         
-        /* Accessibility: Skip link */
-        .skip-link { position: absolute; top: -40px; left: 0; background: var(--gold); color: white; padding: 8px; z-index: 200; transition: top 0.3s; text-decoration: none; }
+        .skip-link { 
+            position: absolute; top: -40px; left: 0; background: var(--accent); color: white; 
+            padding: 8px; z-index: 200; transition: top 0.3s; text-decoration: none; 
+        }
         .skip-link:focus { top: 0; }
-        a:focus { outline: 2px solid var(--gold); outline-offset: 4px; }
+        a:focus, button:focus, .zoom-wrapper:focus { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-        /* Navigation */
+        /* --- 3. NAVIGATION --- */
         nav { 
             display: flex; justify-content: space-between; padding: 25px 5%; 
             align-items: center; border-bottom: 1px solid var(--border-color); 
             background: var(--bg-primary); position: sticky; top: 0; z-index: 100; 
         }
         .logo { font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 22px; text-decoration: none; color: var(--text-primary); }
+        
         .nav-links { display: flex; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--text-primary); margin-left: 25px; font-size: 13px; font-weight: 600; transition: 0.3s; }
-        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
 
-        /* Theme Toggle styling */
-        .theme-toggle-btn { background: none; border: none; cursor: pointer; margin-left: 25px; font-size: 18px; padding: 5px; color: var(--text-primary); }
-        .theme-toggle-btn:hover { color: var(--gold); }
+        .theme-switch {
+            position: relative; display: inline-block; width: 46px; height: 24px; margin-left: 25px;
+        }
+        .theme-switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--border-color); transition: 0.4s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px;
+            left: 3px; bottom: 3px; background-color: var(--text-primary);
+            transition: 0.4s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent); }
+        input:checked + .slider:before { transform: translateX(22px); background-color: #ffffff; }
 
-        /* Header */
+        /* --- 4. GALLERY HEADER & FILTERS --- */
         .gallery-header { text-align: center; padding: 60px 20px; background: var(--bg-secondary); }
-        .gallery-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; color: var(--text-primary); }
+        .gallery-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; color: var(--text-primary); margin-top: 0;}
         
         .filter-nav { text-align: center; margin-bottom: 20px; }
         .filter-btn { 
@@ -64,61 +85,73 @@
             letter-spacing: 1.5px; color: var(--text-secondary); border: none; background: none; 
             padding: 8px 15px; transition: 0.3s;
         }
-        .filter-btn.active { color: var(--text-primary); font-weight: 700; border-bottom: 2px solid var(--gold); }
+        .filter-btn.active { color: var(--text-primary); font-weight: 700; border-bottom: 2px solid var(--accent); }
 
-        /* Gallery Grid */
+        /* --- 5. GALLERY GRID & ITEMS --- */
         .gallery-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
             gap: 50px; padding: 60px 5%; 
-            min-height: 500px;
+            min-height: 500px; align-items: start; 
         }
         .art-item { text-align: center; cursor: pointer; }
-        .art-item.hidden { display: none; }
         
-        .image-container { overflow: hidden; background: #fdfdfd; border: 1px solid var(--border-color); margin-bottom: 15px; }
-        [data-theme="dark"] .image-container { background: #000; border-color: #222; }
+        /* UPDATED: Fixed ratio, but using flexbox to center image and add padding */
+        .image-container { 
+            aspect-ratio: 4 / 3; 
+            overflow: hidden; 
+            border: 1px solid var(--border-color); 
+            margin-bottom: 15px; 
+            background: var(--bg-secondary); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            padding: 15px; /* Creates the padding around the image */
+            box-sizing: border-box;
+        }
 
+        /* UPDATED: object-fit: contain ensures no truncation */
         .art-item img { 
-            width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; 
+            display: block; 
+            max-width: 100%; 
+            max-height: 100%; 
+            object-fit: contain; 
             transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
         .art-item:hover img { transform: scale(1.05); }
 
         .art-item h3 { font-family: 'Playfair Display', serif; margin: 10px 0 5px; font-size: 20px; color: var(--text-primary); }
-        .category-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); font-weight: 600; display: block; }
+        .category-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); font-weight: 600; display: block; }
         .price { color: var(--text-secondary); font-size: 15px; margin-top: 5px; }
 
-        /* --- PRODUCT MODAL --- */
+        /* --- 6. PRODUCT MODAL --- */
         .modal {
             display: none; position: fixed; z-index: 2000; left: 0; top: 0; 
             width: 100%; height: 100%; background-color: var(--modal-overlay); 
-            overflow-y: auto; transition: none; /* No transition for modal open */
+            overflow-y: auto; transition: none; 
         }
         .modal-container {
             display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; 
             max-width: 1300px; margin: 80px auto; padding: 40px; align-items: start;
         }
 
-        /* ZOOM LOGIC */
         .zoom-wrapper {
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            background: #fff;
-            cursor: zoom-in;
-            width: 100%;
+            position: relative; overflow: hidden; border: 1px solid var(--border-color);
+            background: transparent; cursor: zoom-in; width: 100%;
         }
-        [data-theme="dark"] .zoom-wrapper { background: #000; border-color: #222; }
-
         .zoom-wrapper img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.1s ease-out;
-            transform-origin: center center;
+            width: 100%; height: auto; display: block;
+            transition: transform 0.1s ease-out; transform-origin: center center;
         }
-        .zoom-wrapper:active img { transform: scale(2); } /* Mobile Press & Hold */
+        .zoom-wrapper:active img { transform: scale(2); }
+
+        .modal-thumbnails { display: flex; gap: 10px; margin-top: 15px; justify-content: center; flex-wrap: wrap; }
+        .modal-thumb {
+            width: 65px; height: 65px; object-fit: cover; cursor: pointer;
+            border: 2px solid transparent; opacity: 0.5; transition: 0.3s ease;
+        }
+        .modal-thumb:hover { opacity: 1; }
+        .modal-thumb.active { border-color: var(--accent); opacity: 1; }
 
         .modal-info-column { text-align: left; color: var(--text-primary); }
         .modal-info-column h2 { font-family: 'Playfair Display', serif; font-size: 2.8rem; margin: 0 0 10px 0; color: var(--text-primary); }
@@ -128,28 +161,28 @@
         .modal-description p { color: var(--text-secondary); }
         
         .modal-close { position: fixed; top: 25px; right: 35px; font-size: 35px; cursor: pointer; color: var(--text-primary); z-index: 2001; transition: 0.3s; }
-        .modal-close:hover { color: var(--gold); }
+        .modal-close:hover { color: var(--accent); }
         
-        .btn-gold { 
-            background: var(--gold); color: white; padding: 18px 40px; 
+        .btn-accent { 
+            background: var(--accent); color: white; padding: 18px 40px; 
             text-decoration: none; display: block; font-weight: 700; 
             text-transform: uppercase; letter-spacing: 1px; text-align: center;
             transition: 0.3s; margin-top: 40px; 
         }
-        .btn-gold:hover { background: #7a652a; transform: translateY(-2px); color: white; }
+        .btn-accent:hover { opacity: 0.8; transform: translateY(-2px); color: white; }
 
-        /* Pagination */
+        /* --- 7. PAGINATION --- */
         .pagination-container { display: flex; justify-content: center; padding: 50px 0; gap: 10px; }
         .page-btn { 
             width: 45px; height: 45px; border: 1px solid var(--border-color); background: var(--bg-primary); 
             cursor: pointer; font-weight: 600; transition: 0.3s; color: var(--text-primary);
         }
-        .page-btn.active { background: var(--gold); color: white; border-color: var(--gold); }
+        .page-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
         .page-btn:hover:not(.active) { background: var(--bg-secondary); }
 
-        footer { padding: 50px; background: #111; color: #666; text-align: center; font-size: 11px; letter-spacing: 1px; border-top: 1px solid #222; }
+        /* --- 8. FOOTER & RESPONSIVE --- */
+        footer { padding: 50px; background: #0A1118; color: #A6B8C7; text-align: center; font-size: 11px; letter-spacing: 1px; border-top: 1px solid #233547; }
 
-        /* Responsive Breakpoints */
         @media (max-width: 900px) {
             .modal-container { grid-template-columns: 1fr; margin-top: 40px; padding: 20px; gap: 30px; }
             .modal-info-column h2 { font-size: 2rem; }
@@ -172,12 +205,13 @@
         <a href="index.html" class="logo">Fariba Studio</a>
         <div class="nav-links">
             <a href="index.html">Home</a>
-            <a href="gallery.html" style="color: var(--gold);">Gallery</a>
+            <a href="gallery.html" class="active">Gallery</a>
             <a href="contact.html">Contact</a>
-            <!-- Dark Mode Toggle Button -->
-            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Dark Mode">
-                <span id="theme-icon">🌙</span>
-            </button>
+            
+            <label class="theme-switch" aria-label="Toggle Dark Mode">
+                <input type="checkbox" id="theme-toggle-checkbox">
+                <span class="slider"></span>
+            </label>
         </div>
     </nav>
 
@@ -191,88 +225,37 @@
             </div>
         </header>
 
-        <section class="gallery-grid" id="galleryGrid" aria-label="Artwork displays">
-            <!-- Item 1 -->
-            <div class="art-item canvas" onclick="openModal('canvas/person2.jpg', 'The Summer Parasol', '$850.00', 'A peaceful study of light and shade capturing a moment of quiet reflection.', 'Arches Cold Press 300gsm', '18x24 Canvas', '12 Hours')" role="button" aria-label="View details for The Summer Parasol">
-                <div class="image-container">
-                    <img src="canvas/person2.jpg" alt="Watercolor painting of a person with a parasol" loading="lazy">
-                </div>
-                <span class="category-tag">Original Canvas</span>
-                <h3>The Summer Parasol</h3>
-                <p class="price">$850.00</p>
-            </div>
+        <section class="gallery-grid" id="galleryGrid" aria-label="Artwork displays"></section>
 
-            <!-- Item 2 -->
-            <div class="art-item card" onclick="openModal('greeting-cards/color1.png', 'Sun-Drenched Siesta', '$20.00', 'A warm, calming scene from the Mediterranean coast.', 'Textured Cotton Paper', '5x7 Card', '3 Hours')" role="button" aria-label="View details for Sun-Drenched Siesta">
-                <div class="image-container">
-                    <img src="greeting-cards/color1.png" alt="Greeting card with sun-drenched coastal scene" loading="lazy">
-                </div>
-                <span class="category-tag">Greeting Card</span>
-                <h3>Sun-Drenched Siesta</h3>
-                <p class="price">$20.00</p>
-            </div>
-
-            <!-- Add more items as needed, keeping the same structure -->
-             <!-- Items 3 through 10 (duplicates for pagination demonstration) -->
-             <script>
-                // This script block just duplicates items for demonstration of pagination
-                const itemsGrid = document.getElementById('galleryGrid');
-                const cardTemplate = itemsGrid.innerHTML; // Get the html of existing items (Parasol + Siesta)
-                
-                // For demonstration, let's keep the parasol unique (Item 1), then duplicate Sun-Drenched Siesta
-                const cardSiesta = `
-                <div class="art-item card" onclick="openModal('greeting-cards/color1.png', 'Sun-Drenched Siesta', '$20.00', 'A warm, calming scene from the Mediterranean coast.', 'Textured Cotton Paper', '5x7 Card', '3 Hours')" role="button" aria-label="View details for Sun-Drenched Siesta">
-                    <div class="image-container">
-                        <img src="greeting-cards/color1.png" alt="Greeting card with sun-drenched coastal scene" loading="lazy">
-                    </div>
-                    <span class="category-tag">Greeting Card</span>
-                    <h3>Sun-Drenched Siesta</h3>
-                    <p class="price">$20.00</p>
-                </div>`;
-
-                // We need 8 more (Total 10)
-                for(let i=0; i<8; i++) {
-                    itemsGrid.insertAdjacentHTML('beforeend', cardSiesta);
-                }
-             </script>
-        </section>
-
-        <!-- Pagination Controls -->
         <nav id="pagination" class="pagination-container" aria-label="Gallery Pagination"></nav>
     </main>
 
-    <!-- PRODUCT MODAL -->
     <div id="productModal" class="modal" aria-modal="true" role="dialog" aria-labelledby="modalTitle">
         <span class="modal-close" onclick="closeModal()" aria-label="Close modal" role="button" tabindex="0">&times;</span>
         <div class="modal-container">
-            <!-- Left Side: Image with Zoom -->
             <div class="modal-image-column">
                 <div class="zoom-wrapper" id="zoomContainer" tabindex="0" aria-label="Artwork image. Active or press and hold to zoom.">
                     <img id="modalImg" src="" alt="Detailed view of artwork">
                 </div>
+                <div id="modalThumbnails" class="modal-thumbnails"></div>
                 <p style="font-size: 10px; color: var(--text-secondary); margin-top: 10px; text-align: center; text-transform: uppercase; letter-spacing: 1px;">
                     Hover to zoom (Desktop) or Press & Hold (Mobile)
                 </p>
             </div>
-
-            <!-- Right Side: Description -->
             <div class="modal-info-column">
                 <h2 id="modalTitle">Artwork Title</h2>
-                <p id="modalPrice" style="font-size: 24px; color: var(--gold); font-weight: 600; margin-bottom: 20px;">$0.00</p>
-                
+                <p id="modalPrice" style="font-size: 24px; color: var(--accent); font-weight: 600; margin-bottom: 20px;">$0.00</p>
                 <div class="modal-description">
                     <h4 style="text-transform: uppercase; font-size: 12px; letter-spacing: 1px; margin-bottom: 5px; color: var(--text-primary);">About this piece</h4>
                     <p id="modalDesc">Description text goes here...</p>
                 </div>
-
                 <div class="item-spec">
                     <div class="spec-row"><span class="spec-label">Medium / Paper</span><span id="modalPaper" class="spec-value">-</span></div>
                     <div class="spec-row"><span class="spec-label">Dimensions</span><span id="modalSize" class="spec-value">-</span></div>
                     <div class="spec-row"><span class="spec-label">Creation Time</span><span id="modalHours" class="spec-value">-</span></div>
-                    <div class="spec-row"><span class="spec-label">Status</span><span class="spec-value" style="color: var(--gold); font-weight: 600;">Available for Purchase</span></div>
+                    <div class="spec-row"><span class="spec-label">Status</span><span class="spec-value" style="color: var(--accent); font-weight: 600;">Available for Purchase</span></div>
                 </div>
-
-                <a href="contact.html" class="btn-gold">Inquire About This Piece</a>
+                <a href="contact.html" class="btn-accent">Inquire About This Piece</a>
             </div>
         </div>
     </div>
@@ -281,55 +264,180 @@
 
     <script>
         // --- 1. DARK/LIGHT MODE PERSISTENCE ---
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
         const htmlElement = document.documentElement;
-
-        // Check for saved preference or system preference
+        const themeCheckbox = document.getElementById('theme-toggle-checkbox');
         const currentTheme = localStorage.getItem('theme') || 'light';
 
-        // Apply theme on load
         if (currentTheme === 'dark') {
             htmlElement.setAttribute('data-theme', 'dark');
-            themeIcon.innerText = '☀️'; // Show sun icon in dark mode
-        } else {
-            themeIcon.innerText = '🌙'; // Show moon icon in light mode
+            themeCheckbox.checked = true;
         }
 
-        // Toggle Logic
-        themeToggle.addEventListener('click', () => {
-            let theme = htmlElement.getAttribute('data-theme');
-            
-            if (theme === 'dark') {
-                htmlElement.removeAttribute('data-theme');
-                themeIcon.innerText = '🌙';
-                localStorage.setItem('theme', 'light');
-            } else {
+        themeCheckbox.addEventListener('change', function() {
+            if (this.checked) {
                 htmlElement.setAttribute('data-theme', 'dark');
-                themeIcon.innerText = '☀️';
                 localStorage.setItem('theme', 'dark');
+            } else {
+                htmlElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
             }
         });
 
-        // --- 2. GALLERY & MODAL LOGIC (Existing) ---
-        const itemsPerPage = 8;
+        // --- 2. GALLERY DATA (YOUR DATABASE) ---
+        // Add new paintings here! 
+        const artworkDatabase = [
+            {
+                category: "canvas",
+                categoryLabel: "Original Canvas",
+                images: ["canvas/person2.jpg", "canvas/person2.jpg", "canvas/person2.jpg"],
+                title: "The Summer Parasol",
+                price: "$850.00",
+                desc: "A peaceful study of light and shade capturing a moment of quiet reflection.",
+                paper: "Arches Cold Press 300gsm",
+                size: "18x24 Canvas",
+                hours: "12 Hours"
+            },
+            {
+                category: "card",
+                categoryLabel: "Greeting Card",
+                images: ["greeting-cards/color1.png", "greeting-cards/color1.png"],
+                title: "Sun-Drenched Siesta 1",
+                price: "$20.00",
+                desc: "A warm, calming scene from the Mediterranean coast.",
+                paper: "Textured Cotton Paper",
+                size: "5x7 Card",
+                hours: "3 Hours"
+            },
+            {
+                category: "card",
+                categoryLabel: "Greeting Card",
+                images: ["greeting-cards/color1.png", "greeting-cards/color1.png"],
+                title: "Sun-Drenched Siesta 2",
+                price: "$20.00",
+                desc: "A warm, calming scene from the Mediterranean coast.",
+                paper: "Textured Cotton Paper",
+                size: "5x7 Card",
+                hours: "3 Hours"
+            },
+            {
+                category: "card",
+                categoryLabel: "Greeting Card",
+                images: ["greeting-cards/color1.png", "greeting-cards/color1.png"],
+                title: "Sun-Drenched Siesta 3",
+                price: "$20.00",
+                desc: "A warm, calming scene from the Mediterranean coast.",
+                paper: "Textured Cotton Paper",
+                size: "5x7 Card",
+                hours: "3 Hours"
+            },
+            {
+                category: "card",
+                categoryLabel: "Greeting Card",
+                images: ["greeting-cards/color1.png", "greeting-cards/color1.png"],
+                title: "Sun-Drenched Siesta 4",
+                price: "$20.00",
+                desc: "A warm, calming scene from the Mediterranean coast.",
+                paper: "Textured Cotton Paper",
+                size: "5x7 Card",
+                hours: "3 Hours"
+            },
+            {
+                category: "card",
+                categoryLabel: "Greeting Card",
+                images: ["greeting-cards/color1.png", "greeting-cards/color1.png"],
+                title: "Sun-Drenched Siesta 5",
+                price: "$20.00",
+                desc: "A warm, calming scene from the Mediterranean coast.",
+                paper: "Textured Cotton Paper",
+                size: "5x7 Card",
+                hours: "3 Hours"
+            },
+            {
+                category: "card",
+                categoryLabel: "Greeting Card",
+                images: ["greeting-cards/color1.png", "greeting-cards/color1.png"],
+                title: "Sun-Drenched Siesta 6",
+                price: "$20.00",
+                desc: "A warm, calming scene from the Mediterranean coast.",
+                paper: "Textured Cotton Paper",
+                size: "5x7 Card",
+                hours: "3 Hours"
+            },
+            {
+                category: "card",
+                categoryLabel: "Greeting Card",
+                images: ["greeting-cards/color1.png", "greeting-cards/color1.png"],
+                title: "Sun-Drenched Siesta 7",
+                price: "$20.00",
+                desc: "A warm, calming scene from the Mediterranean coast.",
+                paper: "Textured Cotton Paper",
+                size: "5x7 Card",
+                hours: "3 Hours"
+            },
+            {
+                category: "card",
+                categoryLabel: "Greeting Card",
+                images: ["greeting-cards/color1.png", "greeting-cards/color1.png"],
+                title: "Sun-Drenched Siesta 8",
+                price: "$20.00",
+                desc: "A warm, calming scene from the Mediterranean coast.",
+                paper: "Textured Cotton Paper",
+                size: "5x7 Card",
+                hours: "3 Hours"
+            },
+            {
+                category: "card",
+                categoryLabel: "Greeting Card",
+                images: ["greeting-cards/color1.png", "greeting-cards/color1.png"],
+                title: "Sun-Drenched Siesta 9",
+                price: "$20.00",
+                desc: "A warm, calming scene from the Mediterranean coast.",
+                paper: "Textured Cotton Paper",
+                size: "5x7 Card",
+                hours: "3 Hours"
+            }
+        ];
+
+        // --- 3. GALLERY RENDERING & FILTERING ---
+        const galleryGrid = document.getElementById('galleryGrid');
+        const itemsPerPage = 9;
         let currentPage = 1;
         let currentCategory = 'all';
 
-        // Initialize Gallery on load
         updateGallery();
 
-        // --- GALLERY CORE ---
         function updateGallery() {
-            const items = Array.from(document.querySelectorAll('.art-item'));
-            const filteredItems = items.filter(item => (currentCategory === 'all' || item.classList.contains(currentCategory)));
+            // 1. Filter the database array
+            const filteredItems = artworkDatabase.filter(item => currentCategory === 'all' || item.category === currentCategory);
             
-            items.forEach(item => item.classList.add('hidden'));
-
+            // 2. Calculate pagination slices
             const start = (currentPage - 1) * itemsPerPage;
             const end = start + itemsPerPage;
+            const itemsToShow = filteredItems.slice(start, end);
 
-            filteredItems.slice(start, end).forEach(item => item.classList.remove('hidden'));
+            // 3. Render the HTML dynamically
+            galleryGrid.innerHTML = ''; // Clear old items
+            itemsToShow.forEach(item => {
+                const card = document.createElement('div');
+                card.className = `art-item ${item.category}`;
+                card.setAttribute('role', 'button');
+                card.setAttribute('aria-label', `View details for ${item.title}`);
+                
+                // Attach the click event using the data from the object
+                card.onclick = () => openModal(item.images, item.title, item.price, item.desc, item.paper, item.size, item.hours);
+                
+                card.innerHTML = `
+                    <div class="image-container">
+                        <img src="${item.images[0]}" alt="${item.title}" loading="lazy">
+                    </div>
+                    <span class="category-tag">${item.categoryLabel}</span>
+                    <h3>${item.title}</h3>
+                    <p class="price">${item.price}</p>
+                `;
+                
+                galleryGrid.appendChild(card);
+            });
+
             renderPagination(filteredItems.length);
         }
 
@@ -363,41 +471,59 @@
             updateGallery();
         }
 
-        // --- MODAL & ZOOM LOGIC ---
+        // --- 4. MODAL & ZOOM LOGIC ---
         const zoomContainer = document.getElementById('zoomContainer');
         const modalImg = document.getElementById('modalImg');
+        const modalThumbnails = document.getElementById('modalThumbnails');
 
-        function openModal(imgSrc, title, price, desc, paper, size, hours) {
+        function openModal(imgSrcs, title, price, desc, paper, size, hours) {
             document.getElementById("productModal").style.display = "block";
-            modalImg.src = imgSrc;
+            
+            modalImg.src = imgSrcs[0];
+            
+            modalThumbnails.innerHTML = ''; 
+            if (imgSrcs.length > 1) {
+                imgSrcs.forEach((src, index) => {
+                    const thumb = document.createElement('img');
+                    thumb.src = src;
+                    thumb.className = 'modal-thumb' + (index === 0 ? ' active' : '');
+                    thumb.onclick = () => changeModalImage(src, thumb);
+                    modalThumbnails.appendChild(thumb);
+                });
+            }
+
             document.getElementById("modalTitle").innerText = title;
             document.getElementById("modalPrice").innerText = price;
             document.getElementById("modalDesc").innerText = desc;
             document.getElementById("modalPaper").innerText = paper;
             document.getElementById("modalSize").innerText = size;
             document.getElementById("modalHours").innerText = hours;
+            
             document.body.style.overflow = "hidden";
-            // Set focus to modal for accessibility
             document.getElementById("productModal").focus();
+        }
+
+        function changeModalImage(src, thumbElement) {
+            modalImg.src = src;
+            document.querySelectorAll('.modal-thumb').forEach(t => t.classList.remove('active'));
+            thumbElement.classList.add('active');
         }
 
         function closeModal() {
             document.getElementById("productModal").style.display = "none";
             document.body.style.overflow = "auto"; 
-            modalImg.style.transform = "scale(1)"; // Reset zoom
+            modalImg.style.transform = "scale(1)"; 
         }
 
-        // Handle Escape key to close modal
         document.addEventListener('keydown', function(event) {
             if (event.key === "Escape" && document.getElementById("productModal").style.display === "block") {
                 closeModal();
             }
         });
 
-        // Desktop Zoom Interaction
         zoomContainer.addEventListener('mousemove', (e) => {
-            const x = e.clientX - zoomContainer.offsetLeft;
-            const y = e.clientY - zoomContainer.offsetTop;
+            const x = e.clientX - zoomContainer.getBoundingClientRect().left;
+            const y = e.clientY - zoomContainer.getBoundingClientRect().top;
             
             modalImg.style.transformOrigin = `${(x / zoomContainer.offsetWidth) * 100}% ${(y / zoomContainer.offsetHeight) * 100}%`;
             modalImg.style.transform = "scale(2.5)";
@@ -408,7 +534,6 @@
             modalImg.style.transformOrigin = "center center";
         });
 
-        // Close modal on outside click
         window.onclick = (e) => { if (e.target.className === 'modal') closeModal(); }
     </script>
 </body>

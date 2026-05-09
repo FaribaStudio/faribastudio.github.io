@@ -5,64 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Contact Fariba Studio for inquiries regarding original watercolor paintings and greeting card collections.">
     <title>Contact | Fariba Studio</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
+        /* --- 1. CSS VARIABLES (Coastal Serenity Palette) --- */
         :root { 
             /* Light Mode */
-            --bg-primary: #ffffff;
-            --bg-secondary: #f9f9f9;
-            --text-primary: #1a1a1a;
-            --text-secondary: #555555;
-            --border-color: #eeeeee;
-            --gold: #8f7632; 
-            --notice-bg: #fffdf5;
-            --input-bg: #ffffff;
+            --bg-primary: #F8F9FA;    
+            --bg-secondary: #EDF1F5;  
+            --text-primary: #121F2B;  
+            --text-secondary: #33475B; 
+            --border-color: #D6E0E9;
+            --accent: #2C6B7A;        
+            --notice-bg: #E8F0F2;     /* Soft coastal tint for notice box */
+            --input-bg: #FFFFFF;
         }
 
         [data-theme="dark"] {
             /* Dark Mode */
-            --bg-primary: #121212;
-            --bg-secondary: #1e1e1e;
-            --text-primary: #f4f4f4;
-            --text-secondary: #b0b0b0;
-            --border-color: #333333;
-            --gold: #d4af37;
-            --notice-bg: #1a1915;
-            --input-bg: #252525;
+            --bg-primary: #0A1118;    
+            --bg-secondary: #121F2B;  
+            --text-primary: #F8F9FA;  
+            --text-secondary: #A6B8C7; 
+            --border-color: #233547;
+            --accent: #529EAD;        
+            --notice-bg: #162430;     /* Deep sea tint for notice box */
+            --input-bg: #0A1118;
         }
 
-        /* Smooth transition for theme switching */
+        /* --- 2. GLOBAL RESET & BASE STYLES --- */
         * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
 
-        body { margin: 0; font-family: 'Montserrat', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; }
+        body { 
+            margin: 0; font-family: 'Montserrat', sans-serif; 
+            background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; 
+        }
         
         /* Accessibility: Skip link */
-        .skip-link { position: absolute; top: -40px; left: 0; background: var(--gold); color: white; padding: 8px; z-index: 200; transition: top 0.3s; text-decoration: none; }
+        .skip-link { 
+            position: absolute; top: -40px; left: 0; background: var(--accent); color: white; 
+            padding: 8px; z-index: 200; transition: top 0.3s; text-decoration: none; 
+        }
         .skip-link:focus { top: 0; }
+        a:focus, input:focus, textarea:focus, select:focus, button:focus { 
+            outline: 2px solid var(--accent); outline-offset: 4px; 
+        }
 
+        /* --- 3. NAVIGATION --- */
         nav { 
             display: flex; justify-content: space-between; padding: 25px 5%; 
             align-items: center; border-bottom: 1px solid var(--border-color); 
             background: var(--bg-primary); position: sticky; top: 0; z-index: 100; 
         }
         .logo { font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 22px; text-decoration: none; color: var(--text-primary); }
+        
         .nav-links { display: flex; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--text-primary); margin-left: 25px; font-size: 13px; font-weight: 600; transition: 0.3s; }
-        .nav-links a:hover { color: var(--gold); }
-        a:focus { outline: 2px solid var(--gold); outline-offset: 4px; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
 
-        /* Theme Toggle styling */
-        .theme-toggle-btn { background: none; border: none; cursor: pointer; margin-left: 25px; font-size: 18px; padding: 5px; color: var(--text-primary); display: flex; align-items: center; }
-        .theme-toggle-btn:hover { color: var(--gold); }
-
-        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; padding: 80px 10%; max-width: 1200px; margin: 0 auto; }
+        /* Theme Toggle Pill Slider */
+        .theme-switch {
+            position: relative; display: inline-block;
+            width: 46px; height: 24px; margin-left: 25px;
+        }
+        .theme-switch input { opacity: 0; width: 0; height: 0; }
         
-        .contact-info h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 20px; color: var(--text-primary); }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--border-color); transition: 0.4s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px;
+            left: 3px; bottom: 3px; background-color: var(--text-primary);
+            transition: 0.4s; border-radius: 50%;
+        }
+        
+        input:checked + .slider { background-color: var(--accent); }
+        input:checked + .slider:before { transform: translateX(22px); background-color: #ffffff; }
+
+        /* --- 4. CONTACT LAYOUT & TYPOGRAPHY --- */
+        .contact-container { 
+            display: grid; grid-template-columns: 1fr 1fr; gap: 80px; 
+            padding: 80px 10%; max-width: 1200px; margin: 0 auto; 
+        }
+        
+        .contact-info h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 20px; color: var(--text-primary); margin-top: 0; }
         .contact-info p { color: var(--text-secondary); font-size: 16px; margin-bottom: 25px; }
         
         .art-notice { 
             background: var(--notice-bg); 
-            border-left: 3px solid var(--gold); 
+            border-left: 3px solid var(--accent); 
             padding: 20px; 
             margin: 30px 0; 
             font-style: italic;
@@ -72,12 +105,22 @@
 
         .details { margin-top: 40px; }
         .details div { margin-bottom: 20px; }
-        .details strong { display: block; text-transform: uppercase; font-size: 11px; letter-spacing: 2px; color: var(--gold); margin-bottom: 5px; }
+        .details strong { 
+            display: block; text-transform: uppercase; font-size: 11px; 
+            letter-spacing: 2px; color: var(--accent); margin-bottom: 5px; 
+        }
 
-        /* Form Styles */
-        .contact-form { background: var(--bg-secondary); padding: 40px; border-radius: 2px; border: 1px solid var(--border-color); }
+        /* --- 5. CONTACT FORM --- */
+        .contact-form { 
+            background: var(--bg-secondary); padding: 40px; 
+            border-radius: 2px; border: 1px solid var(--border-color); 
+        }
         .form-group { margin-bottom: 20px; }
-        label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; color: var(--text-primary); }
+        label { 
+            display: block; font-size: 11px; font-weight: 700; 
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; 
+            color: var(--text-primary); 
+        }
         
         input, select, textarea { 
             width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 0; 
@@ -92,16 +135,20 @@
             text-transform: uppercase; letter-spacing: 2px; font-weight: 600; 
             cursor: pointer; transition: 0.3s; width: 100%;
         }
-        .submit-btn:hover { background: var(--gold); color: #fff; }
+        .submit-btn:hover { background: var(--accent); color: #ffffff; }
 
-        footer { padding: 40px; background: #111; color: #777; text-align: center; font-size: 12px; border-top: 1px solid #222; }
+        /* --- 6. FOOTER & RESPONSIVE --- */
+        footer { 
+            padding: 50px; background: #0A1118; color: #A6B8C7; 
+            text-align: center; font-size: 11px; letter-spacing: 1px; border-top: 1px solid #233547; 
+        }
 
         @media (max-width: 900px) {
             .contact-container { grid-template-columns: 1fr; padding: 40px 5%; gap: 40px; }
             nav { flex-direction: column; padding: 15px; }
             .nav-links { margin-top: 15px; }
             .nav-links a { margin: 0 10px; font-size: 12px; }
-            .theme-toggle-btn { margin-left: 10px; }
+            .theme-switch { margin-left: 10px; }
             .contact-info h1 { font-size: 2.2rem; }
         }
     </style>
@@ -115,14 +162,17 @@
         <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="gallery.html">Gallery</a>
-            <a href="contact.html" style="color: var(--gold);">Contact</a>
-            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Dark Mode">
-                <span id="theme-icon">🌙</span>
-            </button>
+            <a href="contact.html" class="active">Contact</a>
+            
+            <label class="theme-switch" aria-label="Toggle Dark Mode">
+                <input type="checkbox" id="theme-toggle-checkbox">
+                <span class="slider"></span>
+            </label>
         </div>
     </nav>
 
     <main id="main-content" class="contact-container">
+        
         <div class="contact-info">
             <h1>Inquire</h1>
             <p>Thank you for your interest in Fariba Studio. For inquiries regarding the acquisition of original watercolor canvases, custom greeting card collections, or general studio questions, please reach out by filling out the form below.</p>
@@ -179,29 +229,27 @@
     <footer role="contentinfo">&copy; 2026 FARIBA STUDIO | ALL WORKS ARE HAND-PAINTED ORIGINALS</footer>
 
     <script>
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
+        // --- DARK/LIGHT MODE PERSISTENCE ---
+        const themeCheckbox = document.getElementById('theme-toggle-checkbox');
         const htmlElement = document.documentElement;
 
-        // Force Light Theme default unless user previously selected Dark
+        // Check for saved preference
         const currentTheme = localStorage.getItem('theme') || 'light';
 
+        // Apply theme on load
         if (currentTheme === 'dark') {
             htmlElement.setAttribute('data-theme', 'dark');
-            themeIcon.innerText = '☀️';
+            themeCheckbox.checked = true; // Move slider to the right
         }
 
-        themeToggle.addEventListener('click', () => {
-            let theme = htmlElement.getAttribute('data-theme');
-            
-            if (theme === 'dark') {
-                htmlElement.removeAttribute('data-theme');
-                themeIcon.innerText = '🌙';
-                localStorage.setItem('theme', 'light');
-            } else {
+        // Toggle Logic
+        themeCheckbox.addEventListener('change', function() {
+            if (this.checked) {
                 htmlElement.setAttribute('data-theme', 'dark');
-                themeIcon.innerText = '☀️';
                 localStorage.setItem('theme', 'dark');
+            } else {
+                htmlElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
             }
         });
     </script>
