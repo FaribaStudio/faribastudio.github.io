@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 1. CSS VARIABLES --- */
+        /* --- CSS VARIABLES (Coastal Serenity Palette) --- */
         :root { 
             --bg-primary: #F8F9FA;    
             --bg-secondary: #EDF1F5;  
@@ -32,8 +32,8 @@
             --modal-overlay: rgba(10, 17, 24, 0.98);
         }
 
-        /* --- 2. GLOBAL RESET & BASE STYLES --- */
-        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        /* --- GLOBAL RESET & BASE STYLES --- */
+        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; box-sizing: border-box; }
 
         body { 
             margin: 0; font-family: 'Montserrat', sans-serif; 
@@ -47,7 +47,7 @@
         .skip-link:focus { top: 0; }
         a:focus, button:focus, .zoom-wrapper:focus { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-        /* --- 3. NAVIGATION --- */
+        /* --- NAVIGATION --- */
         nav { 
             display: flex; justify-content: space-between; padding: 25px 5%; 
             align-items: center; border-bottom: 1px solid var(--border-color); 
@@ -56,11 +56,11 @@
         .logo { font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 22px; text-decoration: none; color: var(--text-primary); }
         
         .nav-links { display: flex; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--text-primary); margin-left: 25px; font-size: 13px; font-weight: 600; transition: 0.3s; }
+        .nav-links a { text-decoration: none; color: var(--text-primary); margin-left: 25px; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; line-height: 1; transition: 0.3s; }
         .nav-links a:hover, .nav-links a.active { color: var(--accent); }
 
         .theme-switch {
-            position: relative; display: inline-block; width: 46px; height: 24px; margin-left: 25px;
+            position: relative; display: inline-flex; align-items: center; width: 46px; height: 24px; margin-left: 25px;
         }
         .theme-switch input { opacity: 0; width: 0; height: 0; }
         .slider {
@@ -75,7 +75,7 @@
         input:checked + .slider { background-color: var(--accent); }
         input:checked + .slider:before { transform: translateX(22px); background-color: #ffffff; }
 
-        /* --- 4. GALLERY HEADER & FILTERS --- */
+        /* --- GALLERY HEADER & FILTERS --- */
         .gallery-header { text-align: center; padding: 60px 20px; background: var(--bg-secondary); }
         .gallery-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; color: var(--text-primary); margin-top: 0;}
         
@@ -87,7 +87,7 @@
         }
         .filter-btn.active { color: var(--text-primary); font-weight: 700; border-bottom: 2px solid var(--accent); }
 
-        /* --- 5. GALLERY GRID & ITEMS --- */
+        /* --- GALLERY GRID & ITEMS --- */
         .gallery-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
@@ -106,7 +106,6 @@
             align-items: center; 
             justify-content: center;
             padding: 15px; 
-            box-sizing: border-box;
         }
 
         .art-item img { 
@@ -122,7 +121,7 @@
         .category-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); font-weight: 600; display: block; }
         .price { color: var(--text-secondary); font-size: 15px; margin-top: 5px; }
 
-        /* --- 6. PRODUCT MODAL --- */
+        /* --- PRODUCT MODAL --- */
         .modal {
             display: none; position: fixed; z-index: 2000; left: 0; top: 0; 
             width: 100%; height: 100%; background-color: var(--modal-overlay); 
@@ -169,7 +168,7 @@
         }
         .btn-accent:hover { opacity: 0.8; transform: translateY(-2px); color: white; }
 
-        /* --- 7. PAGINATION --- */
+        /* --- PAGINATION --- */
         .pagination-container { display: flex; justify-content: center; padding: 50px 0; gap: 10px; }
         .page-btn { 
             width: 45px; height: 45px; border: 1px solid var(--border-color); background: var(--bg-primary); 
@@ -178,7 +177,7 @@
         .page-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
         .page-btn:hover:not(.active) { background: var(--bg-secondary); }
 
-        /* --- 8. FOOTER & RESPONSIVE --- */
+        /* --- FOOTER & RESPONSIVE --- */
         footer { padding: 50px; background: #0A1118; color: #A6B8C7; text-align: center; font-size: 11px; letter-spacing: 1px; border-top: 1px solid #233547; }
 
         @media (max-width: 900px) {
@@ -189,9 +188,10 @@
             .filter-btn { margin: 5px; font-size: 10px; }
             .gallery-grid { grid-template-columns: 1fr; gap: 40px; }
             .modal-close { right: 20px; top: 15px; }
-            .nav-links { margin-top: 10px; }
-            nav { flex-direction: column; }
-            .nav-links a { margin-left: 15px; font-size: 12px; }
+            .nav-links { margin-top: 15px; }
+            nav { flex-direction: column; padding: 15px; }
+            .nav-links a { margin: 0 10px; font-size: 12px; }
+            .theme-switch { margin-left: 10px; }
         }
     </style>
 </head>
@@ -199,12 +199,13 @@
 
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <nav aria-label="Main Navigation">
+    <nav role="navigation">
         <a href="index.html" class="logo">Fariba Studio</a>
         <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="gallery.html" class="active">Gallery</a>
-            <a href="contact.html">Contact</a>
+            <a href="news.html">News</a> 
+            <a href="contact.html">Contact</a> 
             
             <label class="theme-switch" aria-label="Toggle Dark Mode">
                 <input type="checkbox" id="theme-toggle-checkbox">
@@ -251,7 +252,7 @@
                     <div class="spec-row"><span class="spec-label">Medium / Paper</span><span id="modalPaper" class="spec-value">-</span></div>
                     <div class="spec-row"><span class="spec-label">Dimensions</span><span id="modalSize" class="spec-value">-</span></div>
                     <div class="spec-row"><span class="spec-label">Creation Time</span><span id="modalHours" class="spec-value">-</span></div>
-                    <div class="spec-row"><span class="spec-label">Status</span><span class="spec-value" style="color: var(--accent); font-weight: 600;">Available for Purchase</span></div>
+                    <div class="spec-row"><span class="spec-label">Status</span><span id="modalStatus" class="spec-value" style="color: var(--accent); font-weight: 600;">-</span></div>
                 </div>
                 <a href="contact.html" class="btn-accent">Inquire About This Piece</a>
             </div>
@@ -264,11 +265,15 @@
         // --- 1. DARK/LIGHT MODE PERSISTENCE ---
         const htmlElement = document.documentElement;
         const themeCheckbox = document.getElementById('theme-toggle-checkbox');
-        const currentTheme = localStorage.getItem('theme') || 'light';
+
+        const currentTheme = localStorage.getItem('theme') || 'dark';
 
         if (currentTheme === 'dark') {
             htmlElement.setAttribute('data-theme', 'dark');
-            themeCheckbox.checked = true;
+            if (themeCheckbox) themeCheckbox.checked = true;
+        } else {
+            htmlElement.removeAttribute('data-theme');
+            if (themeCheckbox) themeCheckbox.checked = false;
         }
 
         themeCheckbox.addEventListener('change', function() {
@@ -281,117 +286,91 @@
             }
         });
 
-        // --- 2. GALLERY DATA (YOUR DATABASE) ---
+        // --- 2. GALLERY DATA ---
         const artworkDatabase = [
             {
                 category: "canvas",
                 categoryLabel: "Original Canvas",
-                images: ["canvas/person2.webp", "canvas/person2.webp", "canvas/person2.webp"],
-                title: "The Summer Parasol",
-                price: "$850.00",
-                desc: "A peaceful study of light and shade capturing a moment of quiet reflection.",
-                paper: "Arches Cold Press 300gsm",
-                size: "18x24 Canvas",
-                hours: "12 Hours"
+                images: ["canvas/the-ballerina.webp"],
+                title: "Grace in Reflection",
+                price: "$30.00",
+                desc: "A soft, contemplative study of a ballerina capturing a quiet moment between movements. Elegant cool tones highlight the delicate textures of her gown and the peaceful stillness of the pose.",
+                paper: "100% Cotton Paper", 
+                size: "5x7 Canvas",
+                hours: "5 Hours",
+                status: "Only Available at The Gallery in Charlottetown"
+            },
+            {
+                category: "canvas",
+                categoryLabel: "Original Canvas",
+                images: ["canvas/the-fox.webp"],
+                title: "Watcher in the Lupines",
+                price: "$30.00",
+                desc: "A vibrant portrait of a red fox nestled among blooming wild lupines and summer wildflowers. Rich, warm textures blend beautifully with the soft greens and purples of a Prince Edward Island meadow.",
+                paper: "100% Cotton Paper",
+                size: "5x7 Canvas",
+                hours: "3 Hours",
+                status: "Only Available at The Gallery in Charlottetown"
             },
             {
                 category: "card",
                 categoryLabel: "Greeting Card",
-                images: ["greeting-cards/color1.webp", "greeting-cards/color1.webp"],
-                title: "Sun-Drenched Siesta 1",
+                images: ["greeting-cards/the-cat-1-1.webp", "greeting-cards/the-cat-1-2.webp"],
+                title: "Curious in the Daisies",
                 price: "$20.00",
-                desc: "A warm, calming scene from the Mediterranean coast.",
-                paper: "Textured Cotton Paper",
-                size: "5x7 Card",
-                hours: "3 Hours"
+                desc: "A charming tuxedo cat peering out with bright green eyes from a lush patch of white and yellow daisies.",
+                paper: "100% Cotton Paper",
+                size: "5x7 Card (4x6 Artwork)",
+                hours: "3 Hours",
+                status: "Available Online"
             },
             {
                 category: "card",
                 categoryLabel: "Greeting Card",
-                images: ["greeting-cards/color2.webp", "greeting-cards/color2.webp"],
-                title: "Sun-Drenched Siesta 2",
+                images: ["greeting-cards/the-cat-2-1.webp", "greeting-cards/the-cat-2-2.webp"],
+                title: "Sunlit Calico",
                 price: "$20.00",
-                desc: "A warm, calming scene from the Mediterranean coast.",
-                paper: "Textured Cotton Paper",
-                size: "5x7 Card",
-                hours: "3 Hours"
+                desc: "A beautiful calico cat gazing out near vibrant pink blossoms against a rustic blue Mediterranean door.",
+                paper: "100% Cotton Paper",
+                size: "5x7 Card (4x6 Artwork)",
+                hours: "3 Hours",
+                status: "Available Online"
             },
             {
                 category: "card",
                 categoryLabel: "Greeting Card",
-                images: ["greeting-cards/color3.webp", "greeting-cards/color3.webp"],
-                title: "Sun-Drenched Siesta 3",
+                images: ["greeting-cards/the-flower-1-1.webp", "greeting-cards/the-flower-1-2.webp"],
+                title: "Morning Glory Melody",
                 price: "$20.00",
-                desc: "A warm, calming scene from the Mediterranean coast.",
-                paper: "Textured Cotton Paper",
-                size: "5x7 Card",
-                hours: "3 Hours"
+                desc: "Elegant blue and purple morning glory flowers climbing gracefully across a soft watercolor backdrop.",
+                paper: "100% Cotton Paper",
+                size: "5x7 Card (4x6 Artwork)",
+                hours: "3 Hours",
+                status: "Available Online"
             },
             {
                 category: "card",
                 categoryLabel: "Greeting Card",
-                images: ["greeting-cards/color4.webp", "greeting-cards/color4.webp"],
-                title: "Sun-Drenched Siesta 4",
+                images: ["greeting-cards/the-flower-2-1.webp", "greeting-cards/the-flower-2-2.webp"],
+                title: "Blossom Splendor",
                 price: "$20.00",
-                desc: "A warm, calming scene from the Mediterranean coast.",
-                paper: "Textured Cotton Paper",
-                size: "5x7 Card",
-                hours: "3 Hours"
-            },
+                desc: "Delicate white cherry blossoms with vibrant pink centers unfolding beautifully on a textured branch.",
+                paper: "100% Cotton Paper",
+                size: "5x7 Card (4x6 Artwork)",
+                hours: "3 Hours",
+                status: "Available Online"
+            }, 
             {
                 category: "card",
                 categoryLabel: "Greeting Card",
-                images: ["greeting-cards/color1.webp", "greeting-cards/color1.webp"],
-                title: "Sun-Drenched Siesta 5",
+                images: ["greeting-cards/the-fox-1-1.webp", "greeting-cards/the-fox-1-2.webp"],
+                title: "Meadow Wanderer",
                 price: "$20.00",
-                desc: "A warm, calming scene from the Mediterranean coast.",
-                paper: "Textured Cotton Paper",
-                size: "5x7 Card",
-                hours: "3 Hours"
-            },
-            {
-                category: "card",
-                categoryLabel: "Greeting Card",
-                images: ["greeting-cards/color1.webp", "greeting-cards/color1.webp"],
-                title: "Sun-Drenched Siesta 6",
-                price: "$20.00",
-                desc: "A warm, calming scene from the Mediterranean coast.",
-                paper: "Textured Cotton Paper",
-                size: "5x7 Card",
-                hours: "3 Hours"
-            },
-            {
-                category: "card",
-                categoryLabel: "Greeting Card",
-                images: ["greeting-cards/color1.webp", "greeting-cards/color1.webp"],
-                title: "Sun-Drenched Siesta 7",
-                price: "$20.00",
-                desc: "A warm, calming scene from the Mediterranean coast.",
-                paper: "Textured Cotton Paper",
-                size: "5x7 Card",
-                hours: "3 Hours"
-            },
-            {
-                category: "card",
-                categoryLabel: "Greeting Card",
-                images: ["greeting-cards/color1.webp", "greeting-cards/color1.webp"],
-                title: "Sun-Drenched Siesta 8",
-                price: "$20.00",
-                desc: "A warm, calming scene from the Mediterranean coast.",
-                paper: "Textured Cotton Paper",
-                size: "5x7 Card",
-                hours: "3 Hours"
-            },
-            {
-                category: "card",
-                categoryLabel: "Greeting Card",
-                images: ["greeting-cards/color1.webp", "greeting-cards/color1.webp"],
-                title: "Sun-Drenched Siesta 9",
-                price: "$20.00",
-                desc: "A warm, calming scene from the Mediterranean coast.",
-                paper: "Textured Cotton Paper",
-                size: "5x7 Card",
-                hours: "3 Hours"
+                desc: "A beautiful, gentle red fox nestled within a vibrant field of wild meadow blossoms and soft greenery.",
+                paper: "100% Cotton Paper",
+                size: "5x7 Card (4x6 Artwork)",
+                hours: "3 Hours",
+                status: "Available Online"
             }
         ];
 
@@ -418,10 +397,8 @@
                 card.setAttribute('role', 'button');
                 card.setAttribute('aria-label', `View details for ${item.title}`);
                 
-                card.onclick = () => openModal(item.images, item.title, item.price, item.desc, item.paper, item.size, item.hours);
+                card.onclick = () => openModal(item.images, item.title, item.price, item.desc, item.paper, item.size, item.hours, item.status);
                 
-                // PERFORMANCE FIX: Only the first 4 images load immediately, the rest are lazy. 
-                // All images use async decoding.
                 let loadStrategy = (index < 4) ? 'fetchpriority="high"' : 'loading="lazy"';
 
                 card.innerHTML = `
@@ -474,7 +451,7 @@
         const modalImg = document.getElementById('modalImg');
         const modalThumbnails = document.getElementById('modalThumbnails');
 
-        function openModal(imgSrcs, title, price, desc, paper, size, hours) {
+        function openModal(imgSrcs, title, price, desc, paper, size, hours, status) {
             document.getElementById("productModal").style.display = "block";
             
             modalImg.src = imgSrcs[0];
@@ -486,7 +463,6 @@
                     thumb.src = src;
                     thumb.className = 'modal-thumb' + (index === 0 ? ' active' : '');
                     thumb.onclick = () => changeModalImage(src, thumb);
-                    // Added decoding async to small thumbnails as well
                     thumb.setAttribute('decoding', 'async');
                     modalThumbnails.appendChild(thumb);
                 });
@@ -498,6 +474,8 @@
             document.getElementById("modalPaper").innerText = paper;
             document.getElementById("modalSize").innerText = size;
             document.getElementById("modalHours").innerText = hours;
+            
+            document.getElementById("modalStatus").innerText = status || "Available for Purchase";
             
             document.body.style.overflow = "hidden";
             document.getElementById("productModal").focus();
@@ -513,6 +491,7 @@
             document.getElementById("productModal").style.display = "none";
             document.body.style.overflow = "auto"; 
             modalImg.style.transform = "scale(1)"; 
+            modalImg.style.transformOrigin = "center center"; 
         }
 
         document.addEventListener('keydown', function(event) {
