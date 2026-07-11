@@ -6,6 +6,8 @@
     <meta name="description" content="Contact Fariba Studio for inquiries regarding original watercolor paintings and greeting card collections.">
     <title>Contact | Fariba Studio</title>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -18,8 +20,9 @@
             --text-secondary: #33475B; 
             --border-color: #D6E0E9;
             --accent: #2C6B7A;        
-            --notice-bg: #E8F0F2;     /* Soft coastal tint for notice box */
+            --notice-bg: #E8F0F2;   
             --input-bg: #FFFFFF;
+            --skip-text: #FFFFFF;    
         }
 
         [data-theme="dark"] {
@@ -30,8 +33,9 @@
             --text-secondary: #A6B8C7; 
             --border-color: #233547;
             --accent: #529EAD;        
-            --notice-bg: #162430;     /* Deep sea tint for notice box */
+            --notice-bg: #162430;   
             --input-bg: #0A1118;
+            --skip-text: #0A1118;    
         }
 
         /* --- 2. GLOBAL RESET & BASE STYLES --- */
@@ -44,10 +48,18 @@
         
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
 
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; 
+            overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;
+        }
+
         /* Accessibility: Skip link */
         .skip-link { 
-            position: absolute; top: -40px; left: 0; background: var(--accent); color: white; 
+            position: absolute; top: -40px; left: 0; 
+            background: var(--accent); 
+            color: var(--skip-text); /* Dynamic contrast color applied */
             padding: 8px; z-index: 200; transition: top 0.3s; text-decoration: none; 
+            font-weight: 600;
         }
         .skip-link:focus { top: 0; }
         a:focus, input:focus, textarea:focus, select:focus, button:focus { 
@@ -76,10 +88,9 @@
             display: inline-flex; 
             align-items: center; 
             transition: 0.3s; 
-            line-height: 24px; /* Matches the exact height of the toggle switch for clean vertical alignment */
+            line-height: 24px; 
         }
 
-        /* Persistent Page Highlight Style */
         .nav-links a:hover, .nav-links a.active { 
             color: var(--accent); 
         }
@@ -125,8 +136,8 @@
         .contact-grid { 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
-            gap: 120px; /* Increased gap to prevent squishing */
-            padding: 80px 8%; /* Balanced side margins matching header and nav */
+            gap: 120px; 
+            padding: 80px 8%; 
             max-width: 1300px; 
             margin: 0 auto; 
         }
@@ -250,7 +261,7 @@
             </div>
 
             <section class="contact-form" aria-labelledby="form-heading">
-                <h2 id="form-heading" style="display: none;">Inquiry Form</h2>
+                <h2 id="form-heading" class="sr-only">Inquiry Form</h2>
                 <form action="https://formspree.io/f/xdabolqa" method="POST">
                     <div class="form-group">
                         <label for="full-name">Full Name</label>

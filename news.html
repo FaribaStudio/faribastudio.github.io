@@ -6,6 +6,9 @@
     <meta name="description" content="Latest news, features, and exhibition updates for Fariba Studio.">
     <title>Fariba Studio | News & Exhibitions</title>
     
+    <!-- Preconnect to Google Fonts to fix render-blocking requests -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -17,6 +20,7 @@
             --text-secondary: #33475B; 
             --border-color: #D6E0E9;
             --accent: #2C6B7A;        
+            --btn-text: #FFFFFF;
             --hero-box-bg: rgba(18, 31, 43, 0.05);
         }
 
@@ -26,7 +30,8 @@
             --text-primary: #F8F9FA;  
             --text-secondary: #A6B8C7; 
             --border-color: #233547;
-            --accent: #529EAD;        
+            --accent: #61B7C9;        
+            --btn-text: #0A1118;
             --hero-box-bg: rgba(18, 31, 43, 0.4);
         }
         
@@ -44,7 +49,9 @@
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
         
         .skip-link {
-            position: absolute; top: -40px; left: 0; background: var(--accent); color: white;
+            position: absolute; top: -40px; left: 0; 
+            background: var(--accent); 
+            color: var(--btn-text); /* Applied dynamic contrast color */
             padding: 8px; z-index: 200; transition: top 0.3s; text-decoration: none;
         }
         .skip-link:focus { top: 0; }
@@ -148,7 +155,10 @@
             transition: 0.3s; font-weight: 700; font-size: 13px;
             text-transform: uppercase; letter-spacing: 1px; border-radius: 4px;
         }
-        .btn-accent { background: var(--accent); color: white; }
+        .btn-accent { 
+            background: var(--accent); 
+            color: var(--btn-text); /* Applied dynamic contrast color */
+        }
         .btn-accent:hover { opacity: 0.9; transform: translateY(-1px); }
 
         /* --- 6. FOOTER --- */
@@ -214,7 +224,7 @@
                         
                         <!-- Image Placeholder Container -->
                         <div class="exhibition-image-container">
-                            <img src="news/news-1.png" alt="Watercolour painting showcase from the Peace of the Soul collection by Fariba">
+                            <img src="news/news-1.png" alt="Watercolour painting showcase from the Peace of the Soul collection by Fariba" width="650" height="433" loading="lazy" decoding="async">
                         </div>
                     </div>
                     

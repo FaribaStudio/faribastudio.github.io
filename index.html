@@ -7,6 +7,8 @@
     <title>Fariba Studio | Home</title>
     
     <link rel="preload" as="image" href="canvas/downtown.webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -48,8 +50,8 @@
             position: absolute; 
             top: -40px; 
             left: 0; 
-            background: #121F2B; /* High-contrast background guarantees WCAG compliance */
-            color: #FFFFFF;     /* Pure white text */
+            background: #121F2B; 
+            color: #FFFFFF;     
             padding: 10px 20px; 
             z-index: 200; 
             transition: top 0.3s; 
@@ -77,7 +79,7 @@
             font-weight: 600; 
             display: inline-flex; 
             align-items: center; 
-            line-height: 24px; /* Matches the toggle switch height for strict horizontal alignment */
+            line-height: 24px; 
             transition: 0.3s; 
         }
         .nav-links a:hover, .nav-links a.active { color: var(--accent); }
@@ -149,7 +151,7 @@
         }
         .btn-accent { 
             background: var(--accent); 
-            color: #0A1118; /* Corrected to dark text for accessible > 4.5:1 WCAG contrast */
+            color: #0A1118; 
         }
         .btn-accent:hover { 
             background: var(--text-primary); 
@@ -248,7 +250,7 @@
                 <a href="gallery.html" class="collection-link">VIEW THE GALLERY →</a>
             </div>
             <div class="artist-portrait-container">
-                <img src="portrait.jpg" alt="Portrait of the artist, Fariba" class="artist-portrait-img">
+                <img src="portrait.jpg" alt="Portrait of the artist, Fariba" class="artist-portrait-img" width="500" height="600" loading="lazy">
             </div>
         </section>
     </main>
