@@ -391,27 +391,34 @@
 
             galleryGrid.innerHTML = ''; 
             
-            itemsToShow.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = `art-item ${item.category}`;
-                card.setAttribute('role', 'button');
-                card.setAttribute('aria-label', `View details for ${item.title}`);
-                
-                card.onclick = () => openModal(item.images, item.title, item.price, item.desc, item.paper, item.size, item.hours, item.status);
-                
-                let loadStrategy = (index < 4) ? 'fetchpriority="high"' : 'loading="lazy"';
+        itemsToShow.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = `art-item ${item.category}`;
+            card.setAttribute('role', 'button');
+            card.setAttribute('aria-label', `View details for ${item.title}`);
+            card.setAttribute('tabindex', '0');
+            card.onclick = () => openModal(item.images, item.title, item.price, item.desc, item.paper, item.size, item.hours, item.status);
+            
+            card.onkeydown = (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault(); // Prevents page jumping on spacebar press
+                    openModal(item.images, item.title, item.price, item.desc, item.paper, item.size, item.hours, item.status);
+                }
+            };
 
-                card.innerHTML = `
-                    <div class="image-container">
-                        <img src="${item.images[0]}" alt="${item.title}" ${loadStrategy} decoding="async">
-                    </div>
-                    <span class="category-tag">${item.categoryLabel}</span>
-                    <h3>${item.title}</h3>
-                    <p class="price">${item.price}</p>
-                `;
-                
-                galleryGrid.appendChild(card);
-            });
+            let loadStrategy = (index < 4) ? 'fetchpriority="high"' : 'loading="lazy"';
+
+            card.innerHTML = `
+                <div class="image-container">
+                    <img src="${item.images[0]}" alt="${item.title}" ${loadStrategy} decoding="async">
+                </div>
+                <span class="category-tag">${item.categoryLabel}</span>
+                <h3>${item.title}</h3>
+                <p class="price">${item.price}</p>
+            `;
+            
+            galleryGrid.appendChild(card);
+        });
 
             renderPagination(filteredItems.length);
         }
